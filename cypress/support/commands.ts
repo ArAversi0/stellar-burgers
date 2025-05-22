@@ -39,15 +39,15 @@ Cypress.Commands.add('cleanAuthData', () => {
 
 Cypress.Commands.add('interceptApiRequests', () => {
   // Перехват запросов к API
-  cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
+  cy.intercept('GET', 'api/ingredients', {
     fixture: 'ingredients.json'
   }).as('getIngredients');
 
-  cy.intercept('GET', 'https://norma.nomoreparties.space/api/auth/user', {
+  cy.intercept('GET', 'api/auth/user', {
     fixture: 'user.json'
   }).as('getUser');
 
-  cy.intercept('POST', 'https://norma.nomoreparties.space/api/orders', {
+  cy.intercept('POST', 'api/orders', {
     fixture: 'order.json'
   }).as('createOrder');
 });

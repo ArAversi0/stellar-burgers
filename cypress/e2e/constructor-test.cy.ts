@@ -1,10 +1,12 @@
+import { SELECTORS } from '../support/selectors';
+
 describe('Конструктор бургера: добавление ингредиентов', () => {
   before(() => {
     cy.interceptApiRequests();
   });
 
   beforeEach(() => {
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
+    cy.intercept('GET', 'api/ingredients', {
       fixture: 'ingredients.json'
     }).as('getIngredients');
 
@@ -28,8 +30,8 @@ describe('Конструктор бургера: добавление ингре
       .contains('Добавить')
       .click();
 
-    cy.get('[data-cy="constructor-ingredients"]')
-      .find('[data-cy="constructor-ingredient"]')
+    cy.get(SELECTORS.constructorIngredients)
+      .find(SELECTORS.constructorIngredient)
       .should('exist');
   });
 
@@ -39,8 +41,8 @@ describe('Конструктор бургера: добавление ингре
       .contains('Добавить')
       .click();
 
-    cy.get('[data-cy="constructor-ingredients"]')
-      .find('[data-cy="constructor-ingredient"]')
+    cy.get(SELECTORS.constructorIngredients)
+      .find(SELECTORS.constructorIngredient)
       .should('exist');
   });
 });

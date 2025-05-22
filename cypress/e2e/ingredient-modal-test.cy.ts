@@ -1,7 +1,9 @@
+import { SELECTORS } from "cypress/support/selectors";
+
 describe('Модальное окно ингредиента', () => {
   beforeEach(() => {
     // Перехватываем запрос к API ингредиентов
-    cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', {
+    cy.intercept('GET', 'api/ingredients', {
       fixture: 'ingredients.json'
     }).as('getIngredients');
 
@@ -14,7 +16,7 @@ describe('Модальное окно ингредиента', () => {
 
   it('должно открываться по клику на ингредиент и отображать информацию о выбранном ингредиенте', () => {
     // Проверяем, что модальное окно отсутствует на экране
-    cy.get('[data-cy="modal"]').should('not.exist');
+    cy.get(SELECTORS.modal).should('not.exist');
 
     // Запоминаем имя ингредиента (булки) перед кликом
     cy.get('@bunIngredient')
@@ -26,7 +28,7 @@ describe('Модальное окно ингредиента', () => {
     cy.get('@bunIngredient').click();
 
     // Сохраняем ссылки на элементы модального окна
-    cy.get('[data-cy="modal"]').as('modal');
+    cy.get(SELECTORS.modal).as('modal');
     cy.get('[data-cy="ingredient-details"]').as('ingredientDetails');
 
     // Проверяем, что модальное окно открылось
@@ -43,13 +45,13 @@ describe('Модальное окно ингредиента', () => {
 
   it('должно закрываться по клику на крестик', () => {
     // Проверяем, что модальное окно отсутствует на экране
-    cy.get('[data-cy="modal"]').should('not.exist');
+    cy.get(SELECTORS.modal).should('not.exist');
 
     // Открываем модальное окно
     cy.get('@bunIngredient').click();
 
     // Сохраняем ссылки на элементы модального окна
-    cy.get('[data-cy="modal"]').as('modal');
+    cy.get(SELECTORS.modal).as('modal');
     cy.get('[data-cy="modal-close-button"]').as('closeButton');
 
     // Проверяем, что модальное окно открылось
@@ -59,18 +61,18 @@ describe('Модальное окно ингредиента', () => {
     cy.get('@closeButton').click();
 
     // Проверяем, что модальное окно закрылось
-    cy.get('[data-cy="modal"]').should('not.exist');
+    cy.get(SELECTORS.modal).should('not.exist');
   });
 
   it('должно закрываться по клику на оверлей', () => {
     // Проверяем, что модальное окно отсутствует на экране
-    cy.get('[data-cy="modal"]').should('not.exist');
+    cy.get(SELECTORS.modal).should('not.exist');
 
     // Открываем модальное окно
     cy.get('@bunIngredient').click();
 
     // Сохраняем ссылки на элементы модального окна
-    cy.get('[data-cy="modal"]').as('modal');
+    cy.get(SELECTORS.modal).as('modal');
     cy.get('[data-cy="modal-overlay"]').as('overlay');
 
     // Проверяем, что модальное окно открылось
@@ -80,6 +82,6 @@ describe('Модальное окно ингредиента', () => {
     cy.get('@overlay').click({ force: true });
 
     // Проверяем, что модальное окно закрылось
-    cy.get('[data-cy="modal"]').should('not.exist');
+    cy.get(SELECTORS.modal).should('not.exist');
   });
 });

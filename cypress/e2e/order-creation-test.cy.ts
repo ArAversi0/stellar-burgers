@@ -1,12 +1,15 @@
+import { SELECTORS } from "cypress/support/selectors";
+
 describe('Создание заказа', () => {
   before(() => {
     cy.interceptApiRequests();
   });
 
   beforeEach(() => {
+    cy.authenticate();
     cy.visit('/');
     cy.wait('@getIngredients');
-    cy.authenticate();
+    cy.wait(500);
   });
 
   afterEach(() => {
@@ -15,13 +18,13 @@ describe('Создание заказа', () => {
 
   it('должен создать заказ и показать номер заказа', () => {
     // Добавляем булку
-    cy.get('[data-cy="ingredient-bun"]').parent().contains('Добавить').click();
+    cy.get('[data-cy="ingredient-bun"]').parent().contains('Добавить').click()
 
     // Добавляем ингредиент
-    cy.get('[data-cy="ingredient-main"]').parent().contains('Добавить').click();
+    cy.get('[data-cy="ingredient-main"]').parent().contains('Добавить').click()
 
     // Оформляем заказ
-    cy.get('[data-cy="order-button"]').click();
+    cy.get('[data-cy="order-button"]').click()
     cy.wait('@createOrder');
 
     // Проверяем номер заказа в модальном окне
@@ -33,8 +36,8 @@ describe('Создание заказа', () => {
     // Проверяем, что конструктор пуст
     cy.get('[data-cy="constructor-bun-top"]').should('not.exist');
     cy.get('[data-cy="constructor-bun-bottom"]').should('not.exist');
-    cy.get('[data-cy="constructor-ingredients"]')
-      .find('[data-cy="constructor-ingredient"]')
+    cy.get(SELECTORS.constructorIngredients)
+      .find(SELECTORS.constructorIngredient)
       .should('not.exist');
   });
 });
